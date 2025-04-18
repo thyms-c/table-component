@@ -99,8 +99,6 @@ export default function TableComponent({
   const handleFilterChange = (key: string, values: string[]) => {
     const newFilters = { ...activeFilters, [key]: values };
 
-    console.log("New Filters:", newFilters);
-
     // Remove empty arrays to keep the filters object clean
     if (values.length === 0) {
       delete newFilters[key];

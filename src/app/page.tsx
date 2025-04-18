@@ -48,7 +48,6 @@ export default function Home() {
   }, [fetchTableData]);
 
   const handleFilter = (newFilters: Record<string, string[]>) => {
-    console.log("New Filters page:", newFilters);
     setFilters(newFilters);
     setCurrentPage(1);
   };
