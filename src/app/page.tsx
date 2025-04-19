@@ -16,7 +16,7 @@ export default function Home() {
   const [filters, setFilters] = useState<Record<string, string[]>>({});
   const [sortConfig, setSortConfig] = useState<{
     key: string;
-    direction: "asc" | "desc";
+    direction: "asc" | "desc" | null;
   } | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchField, setSearchField] = useState<string | undefined>("header3");
@@ -31,7 +31,7 @@ export default function Home() {
         searchField: searchField,
         filters: filters,
         sortBy: sortConfig?.key, // fallback to a valid key
-        sortOrder: sortConfig?.direction,
+        sortOrder: sortConfig?.direction ?? "",
       });
 
       setData(fetchedData);
@@ -52,7 +52,7 @@ export default function Home() {
     setCurrentPage(1);
   };
 
-  const handleSort = (key: string, direction: "asc" | "desc") => {
+  const handleSort = (key: string, direction: "asc" | "desc" | null) => {
     setSortConfig({ key, direction });
     setCurrentPage(1);
   };

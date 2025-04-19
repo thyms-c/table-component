@@ -33,7 +33,7 @@ interface TableComponentProps {
   itemsPerPage?: number;
   userRole?: string;
   onApplyFilter?: (filters: Record<string, string[]>) => void;
-  onApplySort?: (key: string, direction: "asc" | "desc") => void;
+  onApplySort?: (key: string, direction: "asc" | "desc" | null) => void;
   onClickRow?: (record: any) => void;
   onChangePage?: (page: number) => void;
   onSearch?: (query: string, field?: string) => void;
@@ -67,7 +67,9 @@ export default function TableComponent({
   );
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const [sortKey, setSortKey] = useState<string | null>(null);
-  const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
+  const [sortDirection, setSortDirection] = useState<"asc" | "desc" | null>(
+    null
+  );
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>(
     {}
   );
@@ -87,12 +89,22 @@ export default function TableComponent({
   };
 
   const handleSort = (key: string) => {
-    const newDirection =
-      sortKey === key && sortDirection === "asc" ? "desc" : "asc";
-    setSortKey(key);
+    let newDirection: "asc" | "desc" | null = "asc";
+
+    if (sortKey === key) {
+      if (sortDirection === "asc") {
+        newDirection = "desc";
+      } else if (sortDirection === "desc") {
+        newDirection = null;
+      } else {
+        newDirection = "asc";
+      }
+    }
+
+    setSortKey(newDirection === null ? null : key);
     setSortDirection(newDirection);
     if (onApplySort) {
-      onApplySort(key, newDirection);
+      onApplySort(newDirection === null ? "" : key, newDirection);
     }
   };
 

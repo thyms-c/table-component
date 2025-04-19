@@ -68,7 +68,7 @@ export default function TableBar({
         >
           Sort By
         </Button>
-        <Button variant="ghost" leftIcon={<Download size={18} />}>
+        <Button variant="ghost" leftIcon={<Download size={18} />} disabled>
           Export
         </Button>
       </div>
